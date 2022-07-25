@@ -1,0 +1,30 @@
+version: "3.3"
+services:
+
+  analyze_module:
+    image: analyze_module:latest
+#    volumes:
+#      - #TODO
+#    networks:
+#      - #TODO
+
+  controller_module:
+    image: controller_module:latest
+#    networks:
+#      - #TODO
+
+  password_module:
+    image: password_module:latest
+#    volumes:
+#      - #TODO
+#    networks:
+#      - #TODO
+
+#  message_broker:
+#    image: #TODO - your choice
+#    - #TODO
+
+#volumes:
+#  - #TODO
+#networks:
+#  - #TODO
