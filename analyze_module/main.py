@@ -1,9 +1,13 @@
+import glob
 import logging
-import messageBroker
+import os
+from os.path import dirname, join
 
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
+# import messageBroker
 
-if __name__ == '__main__':
-    logger.info("Analyze module is listening...")
-    # TODO
+# logging.basicConfig(level=logging.INFO)
+# logger = logging.getLogger(__name__)
+
+# if __name__ == "__main__":
+#     logger.info("Analyze module is listening...")
+#     # TODO
