@@ -15,7 +15,7 @@ from os.path import join
 #     # TODO
 
 
-project_root = pathlib.Path.cwd()
+project_root = pathlib.Path()
 dir_path = join(project_root, "theHarvester")
 data_path = glob.glob(f"{dir_path}/**/*", recursive=True)
 string_to_match = "password:"
