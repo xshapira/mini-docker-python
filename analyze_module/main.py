@@ -6,6 +6,8 @@ import pathlib
 from collections import Counter
 from os.path import join
 
+import pika  # noqa
+
 import messageBroker
 
 logging.basicConfig(level=logging.INFO)
