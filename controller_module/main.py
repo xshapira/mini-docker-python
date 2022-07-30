@@ -16,6 +16,9 @@ def on_message_received(ch, method, properties, body):
     with open("output.json", "a") as dict_to_json:
         dict_to_json.write(json.dumps(body_dict))
 
+    # Get information for 3 of the tasks which are password, file type,
+    # and file size, which makes the number of fields in the json to be
+    # equal to 3
     counter = 0 + 1
     if counter == 3:
         print("JSON file is generated")
