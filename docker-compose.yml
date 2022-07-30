@@ -4,26 +4,38 @@ services:
     image: analyze_module:latest
     volumes:
       - ./analyze_module
-  #    networks:
-  #      - #TODO
+    networks:
+      front:
+        ipv4_address: 172.16.238.10
+        ipv6_address: '2001:3984:3989::10'
 
   controller_module:
     image: controller_module:latest
     volumes:
       - ./controller_module
-  #    networks:
-  #      - #TODO
+    networks:
+      back:
+        ipv4_address: 172.16.238.11
+        ipv6_address: '2001:3984:3989::11'
 
   password_module:
     image: password_module:latest
     volumes:
       - ./password_module
-  #    networks:
-  #      - #TODO
+    networks:
+      middle:
+        ipv4_address: 172.16.238.12
+        ipv6_address: '2001:3984:3989::12'
 
   message_broker:
     image: rabbitmq:3-management
 
 volumes:
-# networks:
-#   -  #TODO
+  - ./analyze_module
+  - ./controller_module
+  - ./password_module
+
+networks:
+  - front
+  - back
+  - middle
