@@ -1,10 +1,39 @@
+import json
 import logging
 
-# import messageBroker
+import messageBroker
 
-# logging.basicConfig(level=logging.INFO)
-# logger = logging.getLogger(__name__)
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
-# if __name__ == '__main__':
-#     logger.info("Controller module is running and listening...")
-#     # TODO
+
+def on_message_received(ch, method, properties, body):
+    """Call back function when a message is received"""
+    print("Received new message")
+
+    body_dict = json.loads(body)
+
+    with open("output.json", "a") as dict_to_json:
+        dict_to_json.write(json.dumps(body_dict))
+
+    counter = 0 + 1
+    if counter == 3:
+        print("JSON file is generated")
+
+
+if __name__ == "__main__":
+    logger.info("Controller module is running and listening...")
+
+    message_broker = messageBroker()
+    channel = message_broker.get_channel()
+    channel.queue_declare(queue="letterbox")
+    channel.basic_consume(
+        queue="letterbox",
+        auto_ack=True,
+        on_message_callback=on_message_received,
+    )
+
+    print("Starting consuming")
+
+    # Start listening to the channel
+    channel.start_consuming()
