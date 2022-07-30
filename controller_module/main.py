@@ -1,8 +1,6 @@
 import json
 import logging
 
-import pika  # noqa
-
 import messageBroker
 
 logging.basicConfig(level=logging.INFO)
