@@ -27,7 +27,7 @@ def on_message_received(ch, method, properties, body):
 if __name__ == "__main__":
     logger.info("Controller module is running and listening...")
 
-    message_broker = messageBroker()
+    message_broker = messageBroker.MessageBroker()
     channel = message_broker.get_channel()
     channel.queue_declare(queue="letterbox")
     channel.basic_consume(

@@ -38,7 +38,7 @@ if __name__ == "__main__":
     # Convert into a json string
     password_to_json = json.dumps(password)
 
-    message_broker = messageBroker()
+    message_broker = messageBroker.MessageBroker()
     channel = message_broker.get_channel()
     channel.queue_declare(queue="letterbox")
     # Publish to the queue

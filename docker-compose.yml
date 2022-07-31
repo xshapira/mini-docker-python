@@ -3,39 +3,39 @@ services:
   analyze_module:
     image: analyze_module:latest
     volumes:
-      - ./analyze_module
+      - analyze_module_data:/analyze_module
     networks:
-      front:
-        ipv4_address: 172.16.238.10
-        ipv6_address: '2001:3984:3989::10'
+      - front
 
   controller_module:
     image: controller_module:latest
     volumes:
-      - ./controller_module
+      - controller_module_data:/controller_module
     networks:
-      back:
-        ipv4_address: 172.16.238.11
-        ipv6_address: '2001:3984:3989::11'
+      - back
 
   password_module:
     image: password_module:latest
     volumes:
-      - ./password_module
+      - password_module_data:/password_module
     networks:
-      middle:
-        ipv4_address: 172.16.238.12
-        ipv6_address: '2001:3984:3989::12'
+      - middle
 
-  message_broker:
+  rabbitmq:
     image: rabbitmq:3-management
+    ports:
+      - '5672:5672'
+      - '15672:15672'
 
 volumes:
-  - ./analyze_module
-  - ./controller_module
-  - ./password_module
+  analyze_module_data:
+  controller_module_data:
+  password_module_data:
 
 networks:
-  - front
-  - back
-  - middle
+  front:
+    # external: false
+  back:
+    # external: false
+  middle:
+    # external: false

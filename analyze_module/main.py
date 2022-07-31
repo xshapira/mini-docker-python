@@ -50,7 +50,7 @@ if __name__ == "__main__":
     file_types_to_json = json.dumps(file_types)
     file_sizes_to_json = json.dumps(file_sizes)
 
-    message_broker = messageBroker()
+    message_broker = messageBroker.MessageBroker()
     channel = message_broker.get_channel()
     channel.queue_declare(queue="letterbox")
 

@@ -1,10 +1,11 @@
 import pika
 
 
-class messageBroker:
+class MessageBroker:
     def __init__(self):
         """Create a connection"""
-        self.connection_params = pika.ConnectionParameters("localhost")
+        self.credentials = pika.PlainCredentials("guest", "guest")
+        self.connection_params = pika.ConnectionParameters("localhost", 15672)
         self.connection = pika.BlockingConnection(self.connection_params)
 
     def get_channel(self):
@@ -19,6 +20,6 @@ class messageBroker:
 if __name__ == "__main__":
     # Code inside the block will only be executed if
     # the module is run directly, not if it is imported.
-    message_broker = messageBroker()
+    message_broker = MessageBroker()
     message_broker.get_channel()
     message_broker.close_connection()
