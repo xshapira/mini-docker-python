@@ -21,12 +21,6 @@ services:
     networks:
       - middle
 
-  rabbitmq:
-    image: rabbitmq:3-management
-    ports:
-      - '5672:5672'
-      - '15672:15672'
-
 volumes:
   analyze_module_data:
   controller_module_data:
@@ -34,8 +28,5 @@ volumes:
 
 networks:
   front:
-    # external: false
   back:
-    # external: false
   middle:
-    # external: false

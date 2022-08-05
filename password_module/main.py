@@ -37,17 +37,8 @@ if __name__ == "__main__":
     password = get_password()
     # Convert into a json string
     password_to_json = json.dumps(password)
-
-    message_broker = messageBroker.MessageBroker()
-    channel = message_broker.get_channel()
-    channel.queue_declare(queue="letterbox")
-    # Publish to the queue
-    channel.basic_publish(
-        exchange="",
-        routing_key="letterbox",
-        body=password_to_json,
-    )
-
-    print("Message was sent!")
-
-    message_broker.close_connection()
+    try:
+        messageBroker.sendMessage("letterbox", password_to_json)
+        print("Password was sent!")
+    except Exception as e:
+        print(f"Password was not sent!{e}")

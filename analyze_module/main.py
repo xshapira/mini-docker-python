@@ -50,23 +50,13 @@ if __name__ == "__main__":
     file_types_to_json = json.dumps(file_types)
     file_sizes_to_json = json.dumps(file_sizes)
 
-    message_broker = messageBroker.MessageBroker()
-    channel = message_broker.get_channel()
-    channel.queue_declare(queue="letterbox")
-
-    channel.basic_publish(
-        exchange="",
-        routing_key="letterbox",
-        body=file_types_to_json,
-    )
-    print("Message was sent!")
-
-    channel.basic_publish(
-        exchange="",
-        routing_key="letterbox",
-        body=file_sizes_to_json,
-    )
-    print("Message was sent!")
-
-    # Close the connection
-    message_broker.close_connection()
+    try:
+        messageBroker.sendMessage("letterbox", file_types_to_json)
+        print("File types was sent!")
+    except Exception as ex:
+        print(f"filetypes not sent {ex}")
+    try:
+        messageBroker.sendMessage("letterbox", file_sizes_to_json)
+        print("file size was sent!")
+    except Exception as ex:
+        print(f"file size was not sent{ex}")

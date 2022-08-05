@@ -1,6 +1,8 @@
 FROM python:3.8
 COPY analyze_module/ /
-COPY requirements.txt messageBroker.py /
+COPY requirements.txt /
+COPY messageBroker.py /
+COPY hostConfig.json /
 WORKDIR /
 RUN pip install -r requirements.txt
 
