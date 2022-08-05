@@ -37,8 +37,11 @@ if __name__ == "__main__":
     password = get_password()
     # Convert into a json string
     password_to_json = json.dumps(password)
+    logger.info(password_to_json)
     try:
         messageBroker.sendMessage("letterbox", password_to_json)
         print("Password was sent!")
+        # while True:
+        #     print("running")
     except Exception as e:
         print(f"Password was not sent!{e}")

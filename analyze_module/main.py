@@ -49,7 +49,8 @@ if __name__ == "__main__":
     file_sizes = get_file_size()
     file_types_to_json = json.dumps(file_types)
     file_sizes_to_json = json.dumps(file_sizes)
-
+    logger.info(file_types_to_json)
+    logger.info(file_sizes_to_json)
     try:
         messageBroker.sendMessage("letterbox", file_types_to_json)
         print("File types was sent!")
