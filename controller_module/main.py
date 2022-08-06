@@ -19,8 +19,8 @@ def on_message_received(ch, method, properties, body):
         # and file size, which makes the number of fields in the json to be
         # equal to 3
         # counter = 0 + 1
-        # if counter == 0:
-        #     pass
+        # if counter == 3:
+        #     print("JSON generated")
 
 
 if __name__ == "__main__":
@@ -28,7 +28,7 @@ if __name__ == "__main__":
         logger.info("Controller module is running and listening...")
 
         queue = "letterbox"
-        channel = messageBroker.receiveMessage(queue, on_message_received)
+        channel = messageBroker.receive_message(queue, on_message_received)
         channel.basic_consume(
             queue=queue, auto_ack=True, on_message_callback=on_message_received
         )

@@ -3,46 +3,46 @@ import json
 import pika
 
 
-def getHostConfig():
-    f = open("hostConfig.json")
-    return json.load(f)
+def get_host_config():
+    with open("host_config.json") as fp:
+        return json.load(fp)
 
 
-def getCredentials(username, password):
+def get_credentials(username, password):
     return pika.PlainCredentials(username, password)
 
 
-def initiateConnection(
+def initiate_connection(
     host="localhost", port=5672, vhost="", username="guest", password="guest"
 ):
     if username == "guest":
         return pika.BlockingConnection(pika.ConnectionParameters(host, port, vhost))
-    credentials = getCredentials(username, password)
+    credentials = get_credentials(username, password)
     return pika.BlockingConnection(
         pika.ConnectionParameters(host, port, vhost, credentials)
     )
 
 
 def get_connection():
-    config = getHostConfig()
+    config = get_host_config()
     host = config["host"]
     username = config["username"]
     password = config["password"]
     port = 5672
     vhost = config["vhost"]
 
-    return initiateConnection(host, port, vhost, username, password)
+    return initiate_connection(host, port, vhost, username, password)
 
 
-def sendMessage(queue, msg):
+def send_message(queue, message):
     connection = get_connection()
     channel = connection.channel()
     channel.queue_declare(queue)
-    channel.basic_publish(exchange="", routing_key=queue, body=msg)
+    channel.basic_publish(exchange="", routing_key=queue, body=message)
     connection.close()
 
 
-def receiveMessage(queue, callback):
+def receive_message(queue, callback):
     connection = get_connection()
     channel = connection.channel()
     channel.queue_declare(queue)

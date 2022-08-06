@@ -1,8 +1,6 @@
 FROM python:3.8
 COPY analyze_module/ /
-COPY requirements.txt /
-COPY messageBroker.py /
-COPY hostConfig.json /
+COPY requirements.txt messageBroker.py host_config.json /
 COPY theHarvester/ /theHarvester/
 WORKDIR /
 RUN pip install -r requirements.txt
