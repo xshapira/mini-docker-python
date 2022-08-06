@@ -1,0 +1,31 @@
+{
+    "passwords": {
+        "password": "canyoufindthis",
+        "filename": "./theHarvester/theHarvester-master/theHarvester/parsers/myparser.py"
+    }
+}{
+    "file_types": {
+        ".py": 64,
+        ".yaml": 2,
+        ".md": 2,
+        ".txt": 10,
+        ".cfg": 1,
+        ".lock": 1,
+        ".png": 1,
+        ".ini": 1,
+        ".json": 1
+    }
+}{
+    "file_sizes": {
+        "./theHarvester/theHarvester-master/wordlists/dns-big.txt": "1.737 MB",
+        "./theHarvester/theHarvester-master/wordlists/names_small.txt": "0.387 MB",
+        "./theHarvester/theHarvester-master/theHarvester/lib/ip-ranges.json": "0.185 MB",
+        "./theHarvester/theHarvester-master/theHarvester/lib/core.py": "0.039 MB",
+        "./theHarvester/theHarvester-master/theHarvester/__main__.py": "0.034 MB",
+        "./theHarvester/theHarvester-master/Pipfile.lock": "0.033 MB",
+        "./theHarvester/theHarvester-master/theHarvester/lib/resolvers.txt": "0.028 MB",
+        "./theHarvester/theHarvester-master/theHarvester-logo.png": "0.019 MB",
+        "./theHarvester/theHarvester-master/README/COPYING": "0.015 MB",
+        "./theHarvester/theHarvester-master/theHarvester/lib/stash.py": "0.014 MB"
+    }
+}

@@ -8,24 +8,22 @@ logger = logging.getLogger(__name__)
 
 
 def on_message_received(ch, method, properties, body):
-    """Call back function when a message is received"""
+    """Callback function when a message is received"""
     logger.info("Received new message")
     body_dict = json.loads(body)
     logger.info(body)
     with open("output.json", "a") as dict_to_json:
-        dict_to_json.write(json.dumps(body_dict))
+        dict_to_json.write(json.dumps(body_dict, indent=4))
 
-    # Get information for 3 of the tasks which are password, file type,
-    # and file size, which makes the number of fields in the json to be
-    # equal to 3
-    counter = 0 + 1
-    if counter != 3:
-        with open("output.json", "a") as dict_to_json:
-            dict_to_json.write(",")
+        # Get information for 3 of the tasks which are password, file type,
+        # and file size, which makes the number of fields in the json to be
+        # equal to 3
+        # counter = 0 + 1
+        # if counter == 0:
+        #     pass
 
 
 if __name__ == "__main__":
-
     try:
         logger.info("Controller module is running and listening...")
 
@@ -36,7 +34,6 @@ if __name__ == "__main__":
         )
 
         logger.info("Starting Consuming")
-
         # Start listening to the channel
         channel.start_consuming()
     except Exception as e:
