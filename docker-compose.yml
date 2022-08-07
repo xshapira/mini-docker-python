@@ -5,7 +5,7 @@ services:
     volumes:
       - ./theHarvester:/theHarvester
     networks:
-      - front
+      - analyze-net
     depends_on:
       - controller_module
     restart: on-failure
@@ -15,7 +15,7 @@ services:
     volumes:
       - ./theHarvester:/theHarvester
     networks:
-      - middle
+      - password-net
     depends_on:
       - controller_module
     restart: on-failure
@@ -27,7 +27,7 @@ services:
     expose:
       - 5672
     networks:
-      - back
+      - controller-net
     healthcheck:
       test: ['CMD', 'nc', '-z', 'localhost', '5672']
       interval: 30s
@@ -39,6 +39,6 @@ volumes:
   controller_module_data:
 
 networks:
-  front:
-  back:
-  middle:
+  analyze-net:
+  password-net:
+  controller-net:
