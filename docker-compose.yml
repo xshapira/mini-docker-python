@@ -2,10 +2,20 @@ version: '3.3'
 services:
   analyze_module:
     image: analyze_module:latest
-    #volumes:
-    #  - analyze_module_data:/analyze_module
+    volumes:
+      - ./theHarvester:/theHarvester
     networks:
       - front
+    depends_on:
+      - controller_module
+    restart: on-failure
+
+  password_module:
+    image: password_module:latest
+    volumes:
+      - ./theHarvester:/theHarvester
+    networks:
+      - middle
     depends_on:
       - controller_module
     restart: on-failure
@@ -24,20 +34,9 @@ services:
       timeout: 10s
       retries: 5
 
-  password_module:
-    image: password_module:latest
-    #volumes:
-    #  - password_module_data:/password_module
-    networks:
-      - middle
-    depends_on:
-      - controller_module
-    restart: on-failure
-
 volumes:
-  #analyze_module_data:
+  theHarvester:
   controller_module_data:
-  #password_module_data:
 
 networks:
   front:

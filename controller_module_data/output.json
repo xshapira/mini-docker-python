@@ -2,12 +2,12 @@
     "file_types": {
         ".py": 64,
         ".lock": 1,
-        ".png": 1,
-        ".cfg": 1,
-        ".yaml": 2,
         ".md": 2,
-        ".txt": 10,
+        ".yaml": 2,
         ".ini": 1,
+        ".txt": 10,
+        ".cfg": 1,
+        ".png": 1,
         ".json": 1
     },
     "file_sizes": {

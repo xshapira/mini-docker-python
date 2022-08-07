@@ -41,9 +41,11 @@ if __name__ == "__main__":
         )
 
         logger.info("Starting Consuming")
+
         if os.path.exists("data/output.json"):
             print("File Exists")
             os.remove("data/output.json")
+
         # Start listening to the channel
         channel.start_consuming()
     except Exception as e:
