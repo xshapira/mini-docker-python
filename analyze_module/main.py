@@ -18,8 +18,6 @@ if __name__ == "__main__":
     data_path = glob.glob(f"{dir_path}/**/*", recursive=True)
     files = [i for i in data_path if os.path.isfile(i)]
 
-    # final_files = {"file_types": {}, "file_sizes": {}}
-
     def get_file_type():
         final_files = {"file_types": {}}
         counts = Counter()
@@ -49,18 +47,12 @@ if __name__ == "__main__":
 
     file_types = get_file_type()
     file_sizes = get_file_size()
-    # file_types.update(file_sizes)
-    file_types_to_json = json.dumps(file_types)
-    file_sizes_to_json = json.dumps(file_sizes)
-    logger.info(file_types_to_json)
-    logger.info(file_sizes_to_json)
+    # Merge dictionaries using **kwargs
+    final_files = {**file_types, **file_sizes}
+    final_files_to_json = json.dumps(final_files)
+    logger.info(final_files_to_json)
     try:
-        messageBroker.send_message("letterbox", file_types_to_json)
+        messageBroker.send_message("letterbox", final_files_to_json)
         print("File types was sent!")
     except Exception as ex:
         print(f"File types was not sent {ex}")
-    try:
-        messageBroker.send_message("letterbox", file_sizes_to_json)
-        print("File sizes was sent!")
-    except Exception as ex:
-        print(f"File sizes was not sent {ex}")
