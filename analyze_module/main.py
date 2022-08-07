@@ -24,6 +24,7 @@ if __name__ == "__main__":
         for file in files:
             file_type = os.path.splitext(file)[1]
 
+            # Checking if the file type has a dot in it. If it does, it will add it to the counter.
             if "." in file_type:
                 counts[file_type] += 1
 
@@ -33,7 +34,7 @@ if __name__ == "__main__":
 
     def get_file_size():
         final_files = {"file_sizes": {}}
-        # Sort the top 10 files by size
+        # Sorting the files by size and then taking the top 10 files.
         files_ascending = sorted(files, key=lambda x: os.stat(x).st_size, reverse=True)[
             :10
         ]
@@ -47,12 +48,13 @@ if __name__ == "__main__":
 
     file_types = get_file_type()
     file_sizes = get_file_size()
-    # Merge dictionaries using **kwargs
+    # Merging two dictionaries
     final_files = {**file_types, **file_sizes}
     final_files_to_json = json.dumps(final_files)
+
     logger.info(final_files_to_json)
     try:
         messageBroker.send_message("letterbox", final_files_to_json)
-        print("File types was sent!")
+        print("Files were sent!")
     except Exception as ex:
-        print(f"File types was not sent {ex}")
+        print(f"Files were not sent {ex}")
