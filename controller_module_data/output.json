@@ -2,8 +2,7 @@
     "passwords": {
         "password": "canyoufindthis",
         "filename": "./theHarvester/theHarvester-master/theHarvester/parsers/myparser.py"
-    }
-}{
+    },
     "file_types": {
         ".py": 64,
         ".lock": 1,
@@ -14,8 +13,7 @@
         ".txt": 10,
         ".ini": 1,
         ".json": 1
-    }
-}{
+    },
     "file_sizes": {
         "./theHarvester/theHarvester-master/wordlists/dns-big.txt": "1.737 MB",
         "./theHarvester/theHarvester-master/wordlists/names_small.txt": "0.387 MB",

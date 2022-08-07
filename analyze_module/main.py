@@ -49,6 +49,7 @@ if __name__ == "__main__":
 
     file_types = get_file_type()
     file_sizes = get_file_size()
+    # file_types.update(file_sizes)
     file_types_to_json = json.dumps(file_types)
     file_sizes_to_json = json.dumps(file_sizes)
     logger.info(file_types_to_json)
