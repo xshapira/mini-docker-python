@@ -27,12 +27,13 @@ if __name__ == "__main__":
                 data = fp.read()
                 if string_to_match.encode() in data:
                     output = data.decode("ISO-8859-1")
-                    pattern_to_find = re.findall(r"password\S ([^\n]*)", output)
+                    pattern_to_find = re.findall(r"password. (\S+)", output)
                     # Convert list to string and remove quotes
-                    match = str(pattern_to_find)[1:-1].strip("'")
-                    final_files["passwords"].update(
-                        {"password": match, "filename": file}
-                    )
+                    # And confirm the password we get is not an empty string
+                    if match := str(pattern_to_find)[1:-1].strip("'"):
+                        final_files["passwords"].update(
+                            {"password": match, "filename": file}
+                        )
         return final_files
 
     password = get_password()
