@@ -1,5 +1,6 @@
 import json
 import logging
+import os
 
 import messageBroker
 
@@ -8,35 +9,44 @@ logger = logging.getLogger(__name__)
 
 
 def on_message_received(ch, method, properties, body):
-    """Call back function when a message is received"""
-    print("Received new message")
-
+    """Callback function when a message is received.
+    To append all our 3 dictionaries and end up with a valid JSON,
+    we load the current content into a python dict, then update this dict with the new data, and finally overwrite the JSON file to disk."""
+    logger.info("Received new message")
     body_dict = json.loads(body)
-
-    with open("output.json", "a") as dict_to_json:
-        dict_to_json.write(json.dumps(body_dict))
-
-    # Get information for 3 of the tasks which are password, file type,
-    # and file size, which makes the number of fields in the json to be
-    # equal to 3
-    counter = 0 + 1
-    if counter == 3:
-        print("JSON file is generated")
+    logger.info(body)
+    if os.path.exists("data/output.json"):
+        with open("data/output.json", "r+") as dict_to_json:
+            # Load the current content into a python dict
+            json_object = json.loads(dict_to_json.read())
+            # Merge dictionaries
+            json_object.update(body_dict)
+            # Move cursor to the beginning of the file
+            dict_to_json.seek(0)
+            # Write the updated dictionary to JSON
+            dict_to_json.write(json.dumps(json_object, indent=4))
+    else:
+        with open("data/output.json", "w+") as dict_to_json:
+            dict_to_json.write(json.dumps(body_dict, indent=4))
 
 
 if __name__ == "__main__":
-    logger.info("Controller module is running and listening...")
+    try:
+        logger.info("Controller module is running and listening...")
 
-    message_broker = messageBroker.MessageBroker()
-    channel = message_broker.get_channel()
-    channel.queue_declare(queue="letterbox")
-    channel.basic_consume(
-        queue="letterbox",
-        auto_ack=True,
-        on_message_callback=on_message_received,
-    )
+        queue = "letterbox"
+        channel = messageBroker.receive_message(queue, on_message_received)
+        channel.basic_consume(
+            queue=queue, auto_ack=True, on_message_callback=on_message_received
+        )
 
-    print("Starting consuming")
+        logger.info("Starting Consuming")
 
-    # Start listening to the channel
-    channel.start_consuming()
+        if os.path.exists("data/output.json"):
+            print("File Exists")
+            os.remove("data/output.json")
+
+        # Start listening to the channel
+        channel.start_consuming()
+    except Exception as e:
+        logger.info(f"controller not listening{e}")
