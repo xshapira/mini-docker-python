@@ -1,0 +1,6 @@
+{
+  "host": "<host>.rmq.cloudamqp.com",
+  "username": "<username>",
+  "password": "<password>",
+  "vhost": "<same-as-username>"
+}
