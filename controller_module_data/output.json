@@ -1,6 +1,7 @@
 {
     "file_types": {
         ".py": 64,
+        "unknown": 5,
         ".lock": 1,
         ".md": 2,
         ".yaml": 2,

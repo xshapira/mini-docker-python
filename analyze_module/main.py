@@ -24,9 +24,11 @@ if __name__ == "__main__":
         for file in files:
             file_type = os.path.splitext(file)[1]
 
-            # Checking if the file type has a dot in it. If it does, it will add it to the counter.
-            if "." in file_type:
-                counts[file_type] += 1
+            if "." not in file_type:
+                # Checking if the file type is unknown. If it is unknown,
+                # it will set the file type to unknown.
+                file_type = "unknown"
+            counts[file_type] += 1
 
         for file_type, count in counts.items():
             final_files["file_types"].update({file_type: count})
