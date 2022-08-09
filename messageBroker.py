@@ -42,8 +42,13 @@ def send_message(queue, message):
     connection.close()
 
 
-def receive_message(queue, callback):
+def consume_message(queue, callback):
     connection = get_connection()
     channel = connection.channel()
     channel.queue_declare(queue)
-    return channel
+    channel.basic_consume(
+        queue=queue,
+        auto_ack=True,
+        on_message_callback=callback,
+    )
+    channel.start_consuming()

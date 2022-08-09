@@ -34,11 +34,11 @@ if __name__ == "__main__":
     try:
         logger.info("Controller module is running and listening...")
 
-        queue = "letterbox"
-        channel = messageBroker.receive_message(queue, on_message_received)
-        channel.basic_consume(
-            queue=queue, auto_ack=True, on_message_callback=on_message_received
-        )
+        # queue = "letterbox"
+        # channel = messageBroker.receive_message(queue, on_message_received)
+        # channel.basic_consume(
+        #     queue=queue, auto_ack=True, on_message_callback=on_message_received
+        # )
 
         logger.info("Starting Consuming")
 
@@ -46,7 +46,7 @@ if __name__ == "__main__":
             print("File Exists")
             os.remove("data/output.json")
 
-        # Start listening to the channel
-        channel.start_consuming()
+        # Consume message from queue
+        messageBroker.consume_message("letterbox", on_message_received)
     except Exception as e:
         logger.info(f"controller not listening{e}")
