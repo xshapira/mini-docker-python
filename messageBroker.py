@@ -19,11 +19,11 @@ def initiate_connection(
 
 
 def get_connection():
-    host = settings.rabbitmq_host
-    username = settings.rabbitmq_username
-    password = settings.rabbitmq_password
-    port = settings.rabbitmq_port
-    vhost = settings.rabbitmq_vhost
+    host = settings.RABBITMQ_HOST
+    username = settings.RABBITMQ_USERNAME
+    password = settings.RABBITMQ_PASSWORD
+    port = settings.RABBITMQ_PORT
+    vhost = settings.RABBITMQ_VHOST
 
     return initiate_connection(host, port, vhost, username, password)
 
