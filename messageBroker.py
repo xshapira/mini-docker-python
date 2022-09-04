@@ -1,11 +1,6 @@
-import json
-
 import pika
 
-
-def get_host_config():
-    with open("host_config.json") as fp:
-        return json.load(fp)
+from config import settings
 
 
 def get_credentials(username, password):
@@ -24,12 +19,11 @@ def initiate_connection(
 
 
 def get_connection():
-    config = get_host_config()
-    host = config["host"]
-    username = config["username"]
-    password = config["password"]
-    port = 5672
-    vhost = config["vhost"]
+    host = settings.rabbitmq_host
+    username = settings.rabbitmq_username
+    password = settings.rabbitmq_password
+    port = settings.rabbitmq_port
+    vhost = settings.rabbitmq_vhost
 
     return initiate_connection(host, port, vhost, username, password)
 
