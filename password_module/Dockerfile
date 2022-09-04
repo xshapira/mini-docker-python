@@ -1,4 +1,4 @@
-FROM python:3.8
+FROM python:3.10
 COPY password_module/ /
 COPY requirements.txt messageBroker.py config.py /
 WORKDIR /
