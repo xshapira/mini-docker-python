@@ -2,6 +2,7 @@ version: '3.3'
 services:
   analyze_module:
     image: analyze_module:latest
+    env_file: .env
     volumes:
       - ./theHarvester:/theHarvester
     networks:
@@ -12,6 +13,7 @@ services:
 
   password_module:
     image: password_module:latest
+    env_file: .env
     volumes:
       - ./theHarvester:/theHarvester
     networks:
@@ -22,6 +24,7 @@ services:
 
   controller_module:
     image: controller_module:latest
+    env_file: .env
     volumes:
       - ./controller_module_data:/data
     expose:
