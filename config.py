@@ -18,8 +18,7 @@ class Settings(BaseSettings):
 @functools.cache
 def get_settings():
     """
-    The Settings object will be created only once, the first time it's called.
-    Then it will return the same object that was returned on the first call, again and again. We're using `cache` decorator to re-use the same settings object, instead of reading it for each request.
+    We're using `cache` decorator to re-use the same settings object, instead of reading it for each request. The Settings object will be created only once, the first time it's called. Then it will return the same object that was returned on the first call, again and again.
     """
     return Settings()
 
