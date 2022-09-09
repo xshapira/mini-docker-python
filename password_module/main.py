@@ -18,10 +18,10 @@ if __name__ == "__main__":
     data_path = glob.glob(f"{dir_path}/**/*", recursive=True)
     files = [i for i in data_path if os.path.isfile(i)]
 
-    string_to_match = "password"
-
     def get_password():
+        string_to_match = "password"
         final_files = {"passwords": {}}
+
         for file in files:
             with open(file, "rb") as fp:
                 data = fp.read()
