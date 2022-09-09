@@ -16,12 +16,12 @@ if __name__ == "__main__":
 
     dir_path = join(pathlib.Path(), "theHarvester")
     data_path = glob.glob(f"{dir_path}/**/*", recursive=True)
+    files = [i for i in data_path if os.path.isfile(i)]
+
     string_to_match = "password"
 
-    files = [i for i in data_path if os.path.isfile(i)]
-    final_files = {"passwords": {}}
-
     def get_password():
+        final_files = {"passwords": {}}
         for file in files:
             with open(file, "rb") as fp:
                 data = fp.read()

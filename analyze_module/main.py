@@ -25,8 +25,8 @@ if __name__ == "__main__":
             file_type = os.path.splitext(file)[1]
 
             if "." not in file_type:
-                # Checking if the file type is unknown. If it is unknown,
-                # it will set the file type to unknown.
+                # Checking if the file type is unknown. If it is,
+                # then set the file type to unknown.
                 file_type = "unknown"
             counts[file_type] += 1
 
