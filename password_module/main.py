@@ -14,13 +14,19 @@ logger = logging.getLogger(__name__)
 if __name__ == "__main__":
     logger.info("Password module is listening...")
 
-    dir_path = join(pathlib.Path(), "theHarvester")
-    data_path = glob.glob(f"{dir_path}/**/*", recursive=True)
-    files = [i for i in data_path if os.path.isfile(i)]
+    def get_files_from_path():
+        dir_path = join(pathlib.Path(), "theHarvester")
+        data_path = glob.glob(
+            f"{dir_path}/**/*",
+            recursive=True,
+            include_hidden=True,
+        )
+        return [f for f in data_path if os.path.isfile(f)]
 
     def get_password():
         string_to_match = "password"
         final_files = {"passwords": {}}
+        files = get_files_from_path()
 
         for file in files:
             with open(file, "rb") as fp:
@@ -36,9 +42,13 @@ if __name__ == "__main__":
                         )
         return final_files
 
-    password = get_password()
-    # Convert into a json string
-    password_to_json = json.dumps(password)
+    def password_to_json():
+        password = get_password()
+        # Convert into a json string
+        return json.dumps(password)
+
+    password_to_json = password_to_json()
+
     logger.info(password_to_json)
     try:
         messageBroker.send_message("letterbox", password_to_json)

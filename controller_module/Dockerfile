@@ -1,4 +1,4 @@
-FROM python:3.10
+FROM python:3.11
 RUN mkdir /data
 COPY controller_module/ /
 COPY requirements.txt messageBroker.py config.py /

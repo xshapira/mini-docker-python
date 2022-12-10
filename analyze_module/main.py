@@ -15,7 +15,11 @@ if __name__ == "__main__":
     logger.info("Analyze module is listening...")
 
     dir_path = join(pathlib.Path(), "theHarvester")
-    data_path = glob.glob(f"{dir_path}/**/*", recursive=True)
+    data_path = glob.glob(
+        f"{dir_path}/**/*",
+        recursive=True,
+        include_hidden=True,
+    )
     files = [i for i in data_path if os.path.isfile(i)]
 
     def get_file_type():
