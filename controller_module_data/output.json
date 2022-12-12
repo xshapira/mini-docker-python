@@ -1,15 +1,15 @@
 {
     "file_types": {
-        "unknown": 11,
         ".py": 64,
+        "unknown": 11,
+        ".txt": 10,
         ".yml": 6,
-        ".lock": 1,
         ".md": 3,
         ".yaml": 2,
-        ".ini": 1,
-        ".txt": 10,
-        ".cfg": 1,
         ".png": 1,
+        ".ini": 1,
+        ".cfg": 1,
+        ".lock": 1,
         ".json": 1
     },
     "file_sizes": {

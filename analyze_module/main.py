@@ -8,6 +8,7 @@ from os.path import join
 
 import messageBroker
 
+
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
@@ -34,18 +35,24 @@ if __name__ == "__main__":
                 file_type = "unknown"
             counts[file_type] += 1
 
-        for file_type, count in counts.items():
+        sorted_file_type = sorted(
+            counts.items(),
+            key=lambda x: x[1],
+            reverse=True,
+        )
+
+        for file_type, count in sorted_file_type:
             final_files["file_types"].update({file_type: count})
         return final_files
 
     def get_file_size():
         final_files = {"file_sizes": {}}
         # Sorting the files by size and then taking the top 10 files.
-        files_ascending = sorted(files, key=lambda x: os.stat(x).st_size, reverse=True)[
+        sorted_files = sorted(files, key=lambda x: os.stat(x).st_size, reverse=True)[
             :10
         ]
 
-        for path_of_file in files_ascending:
+        for path_of_file in sorted_files:
             size_of_file = os.stat(path_of_file).st_size
             # Show the size in megabytes
             size_of_file_mb = f"{str(round(size_of_file / (1024 * 1024), 3))} MB"
