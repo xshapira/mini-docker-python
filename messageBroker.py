@@ -1,5 +1,5 @@
 import asyncio
-from typing import Callable, Optional, TypeVar, Union
+from typing import Optional, TypeVar, Union
 
 from aio_pika import Message, RobustConnection, connect_robust
 from aio_pika.connection import AbstractConnection
@@ -117,11 +117,11 @@ class RabbitMQ:
                 timeout=timeout,
             )
 
-    def on_consume(self, no_ack: bool):
-        def consume_handler(function: Callable):
-            async def wrapper(channel, method_frame, header_frame, body):
-                await function(channel, method_frame, header_frame, body)
+    # def on_consume(self, no_ack: bool):
+    #     def consume_handler(function: Callable):
+    #         async def wrapper(channel, method_frame, header_frame, body):
+    #             await function(channel, method_frame, header_frame, body)
 
-            return wrapper
+    #         return wrapper
 
-        return consume_handler
+    #     return consume_handler
