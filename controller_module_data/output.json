@@ -6,10 +6,10 @@
         ".yml": 6,
         ".md": 3,
         ".yaml": 2,
-        ".png": 1,
+        ".lock": 1,
         ".ini": 1,
         ".cfg": 1,
-        ".lock": 1,
+        ".png": 1,
         ".json": 1
     },
     "file_sizes": {
