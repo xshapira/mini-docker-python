@@ -1,12 +1,13 @@
 {
     "file_types": {
         ".py": 64,
-        "unknown": 5,
-        ".lock": 1,
-        ".md": 2,
-        ".yaml": 2,
-        ".ini": 1,
+        "unknown": 11,
         ".txt": 10,
+        ".yml": 6,
+        ".md": 3,
+        ".yaml": 2,
+        ".lock": 1,
+        ".ini": 1,
         ".cfg": 1,
         ".png": 1,
         ".json": 1
