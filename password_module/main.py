@@ -56,7 +56,7 @@ password_to_json = password_to_json()
 
 async def publish_message(rabbitmq: RabbitMQ):
     message = Message(body=password_to_json.encode())
-    await rabbitmq.publish(message, routing_key="password_info")
+    await rabbitmq.publish(message, routing_key="letterbox")
 
 
 async def main():
