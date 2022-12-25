@@ -1,5 +1,5 @@
 {
-    "file_types": {
+    "files_by_type": {
         ".py": 64,
         "unknown": 11,
         ".txt": 10,
@@ -12,7 +12,7 @@
         ".png": 1,
         ".json": 1
     },
-    "file_sizes": {
+    "sorted_file_sizes": {
         "./theHarvester/theHarvester-master/wordlists/dns-big.txt": "1.737 MB",
         "./theHarvester/theHarvester-master/wordlists/names_small.txt": "0.387 MB",
         "./theHarvester/theHarvester-master/theHarvester/lib/ip-ranges.json": "0.185 MB",

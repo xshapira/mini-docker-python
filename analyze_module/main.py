@@ -70,7 +70,7 @@ final_files_to_json = json.dumps(final_files)
 
 async def publish_message(rabbitmq: RabbitMQ):
     message = Message(body=final_files_to_json.encode())
-    await rabbitmq.publish(message, routing_key="files_info")
+    await rabbitmq.publish(message, routing_key="letterbox")
 
 
 async def main():
