@@ -24,8 +24,8 @@ data_path = glob.glob(
 files = [i for i in data_path if os.path.isfile(i)]
 
 
-def get_file_type() -> dict[str, Any]:
-    final_files = {"file_types": {}}
+def get_files_by_type() -> dict[str, Any]:
+    final_files = {"files_by_type": {}}
     counts = Counter()
     for file in files:
         file_type = os.path.splitext(file)[1]
@@ -43,12 +43,12 @@ def get_file_type() -> dict[str, Any]:
     )
 
     for file_type, count in sorted_file_type:
-        final_files["file_types"].update({file_type: count})
+        final_files["files_by_type"].update({file_type: count})
     return final_files
 
 
-def get_file_size():
-    final_files = {"file_sizes": {}}
+def get_sorted_file_sizes():
+    final_files = {"sorted_file_sizes": {}}
     # Sorting the files by size and then taking the top 10 files.
     sorted_files = sorted(files, key=lambda x: os.stat(x).st_size, reverse=True)[:10]
 
@@ -56,15 +56,15 @@ def get_file_size():
         size_of_file = os.stat(path_of_file).st_size
         # Show the size in megabytes
         size_of_file_mb = f"{str(round(size_of_file / (1024 * 1024), 3))} MB"
-        final_files["file_sizes"].update({path_of_file: size_of_file_mb})
+        final_files["sorted_file_sizes"].update({path_of_file: size_of_file_mb})
     return final_files
 
 
-file_types = get_file_type()
-file_sizes = get_file_size()
+files_by_type = get_files_by_type()
+sorted_file_sizes = get_sorted_file_sizes()
 
 # Merging two dictionaries
-final_files = {**file_types, **file_sizes}
+final_files = {**files_by_type, **sorted_file_sizes}
 final_files_to_json = json.dumps(final_files)
 
 
