@@ -47,7 +47,14 @@ def get_files_by_type() -> dict[str, Any]:
     return final_files
 
 
-def get_sorted_file_sizes():
+def get_sorted_file_sizes() -> dict[str, Any]:
+    """
+    Return a dictionary of the top 10 files by size.
+    The function sorts the files by size and then takes the top 10.
+
+    :return: A dictionary with the path of the file as key and size
+    in mb as value
+    """
     final_files = {"sorted_file_sizes": {}}
     # Sorting the files by size and then taking the top 10 files.
     sorted_files = sorted(files, key=lambda x: os.stat(x).st_size, reverse=True)[:10]
@@ -68,12 +75,23 @@ final_files = {**files_by_type, **sorted_file_sizes}
 final_files_to_json = json.dumps(final_files)
 
 
-async def publish_message(rabbitmq: RabbitMQ):
+async def publish_message(rabbitmq: RabbitMQ) -> None:
+    """
+    Publish a message to the letterbox exchange.
+    The function takes one argument, `rabbitmq`, which is an instance
+    of RabbitMQ.
+
+    :param rabbitmq: RabbitMQ: Access the rabbitmq instance that
+    has been created in the main function
+    """
     message = Message(body=final_files_to_json.encode())
     await rabbitmq.publish(message, routing_key="letterbox")
 
 
-async def main():
+async def main() -> None:
+    """
+    Create a RabbitMQ connection and publishes messages to it.
+    """
     rabbitmq = await RabbitMQ()
     await publish_message(rabbitmq)
 

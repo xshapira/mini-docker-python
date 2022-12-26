@@ -11,7 +11,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
-async def on_message_received(message: Message):
+async def on_message_received(message: Message) -> None:
     """
     Callback function when a message is received.
     We load the current content into a python dict, then update this dict
@@ -40,13 +40,30 @@ async def on_message_received(message: Message):
     await message.ack()
 
 
-async def consume_messages(rabbitmq: RabbitMQ):
+async def consume_messages(rabbitmq: RabbitMQ) -> None:
+    """
+    Consume messages from the `letterbox` queue.
+    It is a coroutine that takes in a RabbitMQ object as an argument
+    and uses it to connect to the message queue.
+
+    Once connected, it declares a new queue named `letterbox`
+    and then starts consuming messages from this queue using
+    the `on_message_received` function as its callback.
+    The consume_messages function is called by main().
+
+    :param rabbitmq: RabbitMQ: Access the rabbitmq object
+    :return: The result of the on_message_received function
+    """
     async with rabbitmq.connection.channel() as channel:
         queue = await channel.declare_queue("letterbox")
         await queue.consume(on_message_received)
 
 
-async def main():
+async def main() -> None:
+    """
+    Create a RabbitMQ object and then calls an async function
+    to consume messages from it.
+    """
     rabbitmq = await RabbitMQ()
     await consume_messages(rabbitmq)
 

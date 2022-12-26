@@ -116,12 +116,3 @@ class RabbitMQ:
                 immediate=immediate,
                 timeout=timeout,
             )
-
-    # def on_consume(self, no_ack: bool):
-    #     def consume_handler(function: Callable):
-    #         async def wrapper(channel, method_frame, header_frame, body):
-    #             await function(channel, method_frame, header_frame, body)
-
-    #         return wrapper
-
-    #     return consume_handler
