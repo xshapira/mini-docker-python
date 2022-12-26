@@ -81,5 +81,6 @@ if __name__ == "__main__":
         # loop.run_until_complete(main())
         asyncio.run(main())
 
+        print("Finished consuming messages!")
     except Exception as e:
         logger.info(f"controller not listening {e}")

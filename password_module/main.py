@@ -6,7 +6,7 @@ import os
 import pathlib
 import re
 from os.path import join
-from typing import Any
+from typing import Any, Callable
 
 from aio_pika import Message
 
@@ -67,10 +67,12 @@ def password_to_json() -> str:
     return json.dumps(password)
 
 
-password_to_json = password_to_json()
+# password_to_json = password_to_json()
 
 
-async def publish_message(rabbitmq: RabbitMQ) -> None:
+async def publish_message(
+    rabbitmq: RabbitMQ, password_to_json: Callable[[], str]
+) -> None:
     """
     Publish a message to the `letterbox` exchange. The function takes
     one argument, `rabbitmq`, which is an instance of RabbitMQ.
@@ -78,7 +80,7 @@ async def publish_message(rabbitmq: RabbitMQ) -> None:
     :param rabbitmq: RabbitMQ: Access the rabbitmq instance
     """
 
-    message = Message(body=password_to_json.encode())
+    message = Message(body=password_to_json().encode())
     await rabbitmq.publish(message, routing_key="letterbox")
 
 
@@ -88,7 +90,7 @@ async def main() -> None:
     """
 
     rabbitmq = await RabbitMQ()
-    await publish_message(rabbitmq)
+    await publish_message(rabbitmq, password_to_json)
 
 
 if __name__ == "__main__":
