@@ -16,7 +16,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
-def get_files_from_path() -> list[str]:
+def get_files_from_path(directory: str) -> list[str]:
     """
     Return a list of files from the harvester directory.
     The function is called by the main function and used to create a list
@@ -25,7 +25,7 @@ def get_files_from_path() -> list[str]:
 
     :return: A list of all the files in the directory
     """
-    dir_path = join(pathlib.Path(), "theHarvester")
+    dir_path = join(pathlib.Path(), f"{directory}")
     data_path = glob.glob(
         f"{dir_path}/**/*",
         recursive=True,
@@ -34,7 +34,7 @@ def get_files_from_path() -> list[str]:
     return [f for f in data_path if os.path.isfile(f)]
 
 
-def get_password() -> dict[str, dict[str, str]]:
+def get_password(string_to_match: str) -> dict[str, dict[str, str]]:
     """
     Search through all the files in a given directory and return
     any file that contains the word `password`. It will then return
@@ -42,32 +42,32 @@ def get_password() -> dict[str, dict[str, str]]:
 
     :return: A dictionary containing the password and the filename
     """
-    string_to_match = "password"
+
     final_files = {"passwords": {}}
-    files = get_files_from_path()
+    files = get_files_from_path("theHarvester")
 
     for file in files:
         with open(file, "rb") as fp:
             data = fp.read()
             if string_to_match.encode() in data:
                 output = data.decode("ISO-8859-1")
-                pattern_to_find = re.findall(r"password. (\S+)", output)
+                pattern_to_find = re.findall(rf"{string_to_match}. (\S+)", output)
+
                 # Convert list to string and remove quotes
                 # And confirm the password we get is not an empty string
                 if match := str(pattern_to_find)[1:-1].strip("'"):
                     final_files["passwords"].update(
                         {"password": match, "filename": file}
                     )
+
     return final_files
 
 
 def password_to_json() -> str:
-    password: dict[str, Any] = get_password()
+    password: dict[str, Any] = get_password("password")
+
     # Convert into a json string
     return json.dumps(password)
-
-
-# password_to_json = password_to_json()
 
 
 async def publish_message(
@@ -79,8 +79,8 @@ async def publish_message(
 
     :param rabbitmq: RabbitMQ: Access the rabbitmq instance
     """
-
-    message = Message(body=password_to_json().encode())
+    body = password_to_json().encode()
+    message = Message(body=body)
     await rabbitmq.publish(message, routing_key="letterbox")
 
 
