@@ -2,10 +2,8 @@ import asyncio
 from typing import Optional, TypeVar, Union
 
 from aio_pika import Message, RobustConnection, connect_robust
-from aio_pika.connection import AbstractConnection
-from aio_pika.exchange import ExchangeType
-from aio_pika.types import TimeoutType
-from aiormq.types import ConfirmationFrameType
+from aio_pika.abc import AbstractConnection, ExchangeType, TimeoutType
+from aiormq.abc import ConfirmationFrameType
 
 from config import settings
 
