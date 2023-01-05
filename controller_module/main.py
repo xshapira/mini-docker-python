@@ -28,10 +28,13 @@ async def on_message_received(message: Message) -> None:
         with open("data/output.json", "r+") as dict_to_json:
             # Load the current content into a python dict
             json_object = json.loads(dict_to_json.read())
+
             # Merge dictionaries
             json_object.update(message_data)
+
             # Move cursor to the beginning of the file
             dict_to_json.seek(0)
+
             # Write the updated dictionary to JSON
             dict_to_json.write(json.dumps(json_object, indent=4))
     else:
