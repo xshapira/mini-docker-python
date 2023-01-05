@@ -21,7 +21,7 @@ async def on_message_received(message: Message) -> None:
     """
     logger.info("Received new message")
     body = message.body.decode()
-    body_dict = json.loads(body)
+    message_data = json.loads(body)
     logger.info(body)
 
     if os.path.exists("data/output.json"):
@@ -29,14 +29,14 @@ async def on_message_received(message: Message) -> None:
             # Load the current content into a python dict
             json_object = json.loads(dict_to_json.read())
             # Merge dictionaries
-            json_object.update(body_dict)
+            json_object.update(message_data)
             # Move cursor to the beginning of the file
             dict_to_json.seek(0)
             # Write the updated dictionary to JSON
             dict_to_json.write(json.dumps(json_object, indent=4))
     else:
         with open("data/output.json", "w+") as dict_to_json:
-            dict_to_json.write(json.dumps(body_dict, indent=4))
+            dict_to_json.write(json.dumps(message_data, indent=4))
     await message.ack()
 
 
