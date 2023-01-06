@@ -90,7 +90,6 @@ if __name__ == "__main__":
         # until completion
         loop.create_task(main())
         loop.run_until_complete(main())
-        # asyncio.run(main())
 
         print("Finished consuming messages!")
     except Exception as e:

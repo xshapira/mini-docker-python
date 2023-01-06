@@ -1,11 +1,8 @@
 import asyncio
-import glob
 import json
 import logging
-import os
 import pathlib
 import re
-from os.path import join
 from typing import Any, Callable
 
 from aio_pika import Message
@@ -25,13 +22,10 @@ def get_files_from_path(directory: str) -> list[str]:
 
     :return: A list of all the files in the directory
     """
-    dir_path = join(pathlib.Path(), f"{directory}")
-    data_path = glob.glob(
-        f"{dir_path}/**/*",
-        recursive=True,
-        include_hidden=True,
-    )
-    return [f for f in data_path if os.path.isfile(f)]
+
+    dir_path = pathlib.Path(directory)
+    data_path = list(dir_path.rglob("*"))
+    return [str(f) for f in data_path if f.is_file()]
 
 
 def get_password(string_to_match: str) -> dict[str, dict[str, str]]:
@@ -106,7 +100,6 @@ if __name__ == "__main__":
         # until completion
         loop.create_task(main())
         loop.run_until_complete(main())
-        # asyncio.run(main())
 
         print("Password was sent!")
     except Exception as ex:
