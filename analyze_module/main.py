@@ -1,17 +1,37 @@
 import asyncio
+import glob
 import json
 import logging
 import os
+import pathlib
 from collections import Counter
+from os.path import join
 from typing import Any
 
 from aio_pika import Message
 
 from messageBroker import RabbitMQ
-from password_module.main import get_files_from_path
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+
+
+def get_files_from_path(directory: str) -> list[str]:
+    """
+    Return a list of files from the harvester directory.
+    The function is called by the main function and used to create a list
+    of files that are then passed into the `get_data_from_file`
+    and `send_message` functions.
+
+    :return: A list of all the files in the directory
+    """
+    dir_path = join(pathlib.Path(), f"{directory}")
+    data_path = glob.glob(
+        f"{dir_path}/**/*",
+        recursive=True,
+        include_hidden=True,
+    )
+    return [f for f in data_path if os.path.isfile(f)]
 
 
 def get_files_by_type(files: list[str]) -> dict[str, Any]:
@@ -122,9 +142,15 @@ if __name__ == "__main__":
     logger.info(get_final_files())
 
     try:
-        # loop = asyncio.get_event_loop()
-        # loop.run_until_complete(main())
-        asyncio.run(main())
+        # Create a new event loop and set it as the current event loop
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+
+        # Create a task for the main coroutine function and run it
+        # until completion
+        loop.create_task(main())
+        loop.run_until_complete(main())
+        # asyncio.run(main())
 
         print("Files were sent!")
     except Exception as ex:
