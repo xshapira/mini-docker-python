@@ -123,8 +123,8 @@ async def publish_message(rabbitmq: RabbitMQ) -> None:
     has been created in the main function
     """
 
-    body = get_final_files().encode()
-    message = Message(body=body)
+    body = get_final_files()
+    message = Message(body=body.encode())
     await rabbitmq.publish(message, routing_key="letterbox")
 
 

@@ -79,8 +79,8 @@ async def publish_message(
 
     :param rabbitmq: RabbitMQ: Access the rabbitmq instance
     """
-    body = password_to_json().encode()
-    message = Message(body=body)
+    body = password_to_json()
+    message = Message(body=body.encode())
     await rabbitmq.publish(message, routing_key="letterbox")
 
 
