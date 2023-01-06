@@ -87,7 +87,10 @@ def get_sorted_file_sizes(files: list[str]) -> dict[str, Any]:
         file_size = file_path.stat().st_size
         # Show the size in megabytes
         file_size_mb = f"{str(round(file_size / (1024 * 1024), 3))} MB"
-        final_files["sorted_file_sizes"].update({file_path: file_size_mb})
+        # Convert `file_path` (a Path object) to a string for use as
+        # dictionary key
+        final_files["sorted_file_sizes"].update({str(file_path): file_size_mb})
+
     return final_files
 
 
