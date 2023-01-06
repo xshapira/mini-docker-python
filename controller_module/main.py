@@ -1,7 +1,7 @@
 import asyncio
 import json
 import logging
-import os
+from pathlib import Path
 
 from aio_pika import Message
 
@@ -24,7 +24,8 @@ async def on_message_received(message: Message) -> None:
     message_data = json.loads(body)
     logger.info(body)
 
-    if os.path.exists("data/output.json"):
+    output_file = Path("data/output.json")
+    if output_file.exists():
         with open("data/output.json", "r+") as dict_to_json:
             # Load the current content into a python dict
             json_object = json.loads(dict_to_json.read())
@@ -76,9 +77,10 @@ if __name__ == "__main__":
         logger.info("Controller module is running and listening...")
         logger.info("Starting Consuming")
 
-        if os.path.exists("data/output.json"):
+        output_file = Path("data/output.json")
+        if output_file.exists():
             print("File Exists")
-            os.remove("data/output.json")
+            output_file.unlink()
 
         # loop = asyncio.get_event_loop()
         # loop.run_until_complete(main())
