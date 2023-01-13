@@ -103,4 +103,4 @@ if __name__ == "__main__":
 
         print("Password was sent!")
     except Exception as ex:
-        print(f"Password was not sent! {ex}")
+        logger.info(f"Password was not sent! {ex}")

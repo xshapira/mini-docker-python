@@ -73,9 +73,10 @@ async def main() -> None:
 
 
 if __name__ == "__main__":
+    logger.info("Controller module is running and listening...")
+    logger.info("Starting Consuming")
+
     try:
-        logger.info("Controller module is running and listening...")
-        logger.info("Starting Consuming")
 
         output_file = Path("data/output.json")
         if output_file.exists():

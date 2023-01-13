@@ -158,4 +158,4 @@ if __name__ == "__main__":
 
         print("Files were sent!")
     except Exception as ex:
-        print(f"Files were not sent {ex}")
+        logger.info(f"Files were not sent {ex}")
