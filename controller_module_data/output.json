@@ -1,8 +1,4 @@
 {
-    "passwords": {
-        "password": "canyoufindthis",
-        "filename": "theHarvester/theHarvester-master/theHarvester/parsers/myparser.py"
-    },
     "files_by_type": {
         ".py": 64,
         "unknown": 11,
@@ -27,5 +23,9 @@
         "theHarvester/theHarvester-master/theHarvester-logo.png": "0.019 MB",
         "theHarvester/theHarvester-master/README/COPYING": "0.015 MB",
         "theHarvester/theHarvester-master/theHarvester/lib/stash.py": "0.014 MB"
+    },
+    "passwords": {
+        "password": "canyoufindthis",
+        "filename": "theHarvester/theHarvester-master/theHarvester/parsers/myparser.py"
     }
 }
