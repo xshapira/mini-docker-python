@@ -2,34 +2,56 @@ from typing import Any, Generator, Self
 
 import confluent_kafka
 
+from config import settings
+
 
 class Kafka:
     def __init__(
         self,
-        topic: str,
+        # topic: str | None,
         *,
-        bootstrap_servers: str = "localhost:9092",
-        client_id: str = "",
+        bootstrap_servers: str = settings.KAFKA_SERVER,
+        security_protocol: str = "SASL_SSL",
+        mechanism: str = "PLAIN",
+        username: str = settings.KAFKA_USERNAME,
+        password: str = settings.KAFKA_PASSWORD,
         group_id: str = "",
+        timeout: float = 1.0,
+        auto_offset_reset: str = "earliest",
         **kwargs
     ) -> None:
 
-        self.topic = topic
+        # self.topic = topic
         self.bootstrap_servers = bootstrap_servers
-        self.client_id = client_id
+        self.security_protocol = security_protocol
+        self.mechanism = mechanism
+        self.username = username
+        self.password = password
         self.group_id = group_id
+        self.timeout = timeout
+        self.auto_offset_reset = auto_offset_reset
         self.kwargs = kwargs
 
     async def connect(self) -> Self:
         self.producer = confluent_kafka.Producer(
-            {"bootstrap.servers": self.bootstrap_servers, "client.id": self.client_id},
+            {
+                "bootstrap.servers": self.bootstrap_servers,
+                "security.protocol": self.security_protocol,
+                "sasl.username": self.username,
+                "sasl.password": self.password,
+            },
             **self.kwargs
         )
         self.consumer = confluent_kafka.Consumer(
             {
                 "bootstrap.servers": self.bootstrap_servers,
+                "security.protocol": self.security_protocol,
+                "sasl.mechanism": self.mechanism,
+                "sasl.username": self.username,
+                "sasl.password": self.password,
                 "group.id": self.group_id,
-                "client.id": self.client_id,
+                "auto.offset.reset": self.auto_offset_reset,
+                "session.timeout.ms": self.timeout,
             },
             **self.kwargs
         )

@@ -4,11 +4,9 @@ from pydantic import BaseSettings
 
 
 class Settings(BaseSettings):
-    RABBITMQ_HOST: str
-    RABBITMQ_USERNAME: str
-    RABBITMQ_PASSWORD: str
-    RABBITMQ_PORT: int
-    RABBITMQ_VHOST: str
+    KAFKA_SERVER: str
+    KAFKA_USERNAME: str
+    KAFKA_PASSWORD: str
 
     class Config:
         case_sensitive = True

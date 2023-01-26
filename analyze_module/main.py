@@ -5,9 +5,9 @@ import pathlib
 from collections import Counter
 from typing import Any
 
-from aio_pika import Message
+from confluent_kafka import Message
 
-from messageBroker import RabbitMQ
+from message_broker import Kafka
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -118,7 +118,7 @@ def get_final_files() -> str:
     return json.dumps(final_files)
 
 
-async def publish_message(rabbitmq: RabbitMQ) -> None:
+async def publish_message(kafka: Kafka) -> None:
     """
     Publish a message to the letterbox exchange.
     The function takes one argument, `rabbitmq`, which is an instance
@@ -130,7 +130,8 @@ async def publish_message(rabbitmq: RabbitMQ) -> None:
 
     body = get_final_files()
     message = Message(body=body.encode())
-    await rabbitmq.publish(message, routing_key="letterbox")
+    kafka.topic = "letterbox"
+    await kafka.producer.produce(message, kafka.topic)
 
 
 async def main() -> None:
@@ -138,8 +139,8 @@ async def main() -> None:
     Create a RabbitMQ connection and publishes messages to it.
     """
 
-    rabbitmq = await RabbitMQ()
-    await publish_message(rabbitmq)
+    kafka = await Kafka()
+    await publish_message(kafka)
 
 
 if __name__ == "__main__":

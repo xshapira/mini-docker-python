@@ -1,3 +1,2 @@
-pika
+confluent-kafka
 pydantic
-aio-pika

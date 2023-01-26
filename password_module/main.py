@@ -5,9 +5,9 @@ import pathlib
 import re
 from typing import Any, Callable
 
-from aio_pika import Message
+from confluent_kafka import Message
 
-from messageBroker import RabbitMQ
+from message_broker import Kafka
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -64,9 +64,7 @@ def password_to_json() -> str:
     return json.dumps(password)
 
 
-async def publish_message(
-    rabbitmq: RabbitMQ, password_to_json: Callable[[], str]
-) -> None:
+async def publish_message(kafka: Kafka, password_to_json: Callable[[], str]) -> None:
     """
     Publish a message to the `letterbox` exchange. The function takes
     one argument, `rabbitmq`, which is an instance of RabbitMQ.
@@ -75,7 +73,8 @@ async def publish_message(
     """
     body = password_to_json()
     message = Message(body=body.encode())
-    await rabbitmq.publish(message, routing_key="letterbox")
+    kafka.topic = "letterbox"
+    await kafka.producer.produce(message, kafka.topic)
 
 
 async def main() -> None:
@@ -83,8 +82,8 @@ async def main() -> None:
     Create a RabbitMQ object and calls publish_message() on it.
     """
 
-    rabbitmq = await RabbitMQ()
-    await publish_message(rabbitmq, password_to_json)
+    kafka = await Kafka()
+    await publish_message(kafka, password_to_json)
 
 
 if __name__ == "__main__":

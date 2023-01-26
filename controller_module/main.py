@@ -3,9 +3,9 @@ import json
 import logging
 from pathlib import Path
 
-from aio_pika import Message
+from confluent_kafka import Message
 
-from messageBroker import RabbitMQ
+from message_broker import Kafka
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -41,10 +41,10 @@ async def on_message_received(message: Message) -> None:
     else:
         with open("data/output.json", "w+") as dict_to_json:
             dict_to_json.write(json.dumps(message_data, indent=4))
-    await message.ack()
+    await message.commit()
 
 
-async def consume_messages(rabbitmq: RabbitMQ) -> None:
+async def consume_messages(kafka: Kafka, topic: str) -> None:
     """
     Consume messages from the `letterbox` queue.
     It is a coroutine that takes in a RabbitMQ object as an argument
@@ -58,9 +58,10 @@ async def consume_messages(rabbitmq: RabbitMQ) -> None:
     :param rabbitmq: RabbitMQ: Access the rabbitmq object
     :return: The result of the on_message_received function
     """
-    async with rabbitmq.connection.channel() as channel:
-        queue = await channel.declare_queue("letterbox")
-        await queue.consume(on_message_received)
+    kafka = Kafka(topic)
+    kafka.consumer.subscribe(on_message_received)
+    while True:
+        kafka.poll(1.0)
 
 
 async def main() -> None:
@@ -68,8 +69,8 @@ async def main() -> None:
     Create a RabbitMQ object and then calls an async function
     to consume messages from it.
     """
-    rabbitmq = await RabbitMQ()
-    await consume_messages(rabbitmq)
+    kafka = await Kafka()
+    await consume_messages(kafka, topic="letterbox")
 
 
 if __name__ == "__main__":
