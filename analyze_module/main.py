@@ -5,8 +5,6 @@ import pathlib
 from collections import Counter
 from typing import Any
 
-from confluent_kafka import Message
-
 from message_broker import Kafka
 
 logging.basicConfig(level=logging.INFO)
@@ -128,10 +126,10 @@ async def publish_message(kafka: Kafka) -> None:
     has been created in the main function
     """
 
+    await asyncio.ensure_future(kafka.connect())
     body = get_final_files()
-    message = Message(body=body.encode())
     kafka.topic = "letterbox"
-    await kafka.producer.produce(message, kafka.topic)
+    await kafka.producer.produce(topic=kafka.topic, value=body.encode())
 
 
 async def main() -> None:

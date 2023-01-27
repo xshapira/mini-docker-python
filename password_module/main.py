@@ -5,8 +5,6 @@ import pathlib
 import re
 from typing import Any, Callable
 
-from confluent_kafka import Message
-
 from message_broker import Kafka
 
 logging.basicConfig(level=logging.INFO)
@@ -71,10 +69,11 @@ async def publish_message(kafka: Kafka, password_to_json: Callable[[], str]) -> 
 
     :param rabbitmq: RabbitMQ: Access the rabbitmq instance
     """
+
+    await asyncio.ensure_future(kafka.connect())
     body = password_to_json()
-    message = Message(body=body.encode())
     kafka.topic = "letterbox"
-    await kafka.producer.produce(message, kafka.topic)
+    await kafka.producer.produce(topic=kafka.topic, value=body.encode())
 
 
 async def main() -> None:

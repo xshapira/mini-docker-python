@@ -44,7 +44,7 @@ async def on_message_received(message: Message) -> None:
     await message.commit()
 
 
-async def consume_messages(kafka: Kafka, topic: str) -> None:
+async def consume_messages(kafka: Kafka) -> None:
     """
     Consume messages from the `letterbox` queue.
     It is a coroutine that takes in a RabbitMQ object as an argument
@@ -58,10 +58,10 @@ async def consume_messages(kafka: Kafka, topic: str) -> None:
     :param rabbitmq: RabbitMQ: Access the rabbitmq object
     :return: The result of the on_message_received function
     """
-    kafka = Kafka(topic)
-    kafka.consumer.subscribe(on_message_received)
+    # kafka = await Kafka(topic).connect()
+    kafka.consumer.subscribe(kafka.topic)
     while True:
-        kafka.poll(1.0)
+        kafka.poll(1.0, on_message=on_message_received)
 
 
 async def main() -> None:
@@ -69,8 +69,9 @@ async def main() -> None:
     Create a RabbitMQ object and then calls an async function
     to consume messages from it.
     """
-    kafka = await Kafka()
-    await consume_messages(kafka, topic="letterbox")
+    kafka = await Kafka(topic=["letterbox"])
+    # kafka.topic = "letterbox"
+    await consume_messages(kafka)
 
 
 if __name__ == "__main__":

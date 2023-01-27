@@ -8,23 +8,23 @@ from config import settings
 class Kafka:
     def __init__(
         self,
-        # topic: str | None,
+        topic: list[str] = "",
         *,
         bootstrap_servers: str = settings.KAFKA_SERVER,
         security_protocol: str = "SASL_SSL",
-        mechanism: str = "PLAIN",
+        mechanisms: str = "PLAIN",
         username: str = settings.KAFKA_USERNAME,
         password: str = settings.KAFKA_PASSWORD,
-        group_id: str = "",
+        group_id: str = "my-group",
         timeout: float = 1.0,
         auto_offset_reset: str = "earliest",
         **kwargs
     ) -> None:
 
-        # self.topic = topic
+        self.topic = topic
         self.bootstrap_servers = bootstrap_servers
         self.security_protocol = security_protocol
-        self.mechanism = mechanism
+        self.mechanisms = mechanisms
         self.username = username
         self.password = password
         self.group_id = group_id
@@ -37,6 +37,7 @@ class Kafka:
             {
                 "bootstrap.servers": self.bootstrap_servers,
                 "security.protocol": self.security_protocol,
+                "sasl.mechanisms": self.mechanisms,
                 "sasl.username": self.username,
                 "sasl.password": self.password,
             },
@@ -46,7 +47,7 @@ class Kafka:
             {
                 "bootstrap.servers": self.bootstrap_servers,
                 "security.protocol": self.security_protocol,
-                "sasl.mechanism": self.mechanism,
+                "sasl.mechanisms": self.mechanisms,
                 "sasl.username": self.username,
                 "sasl.password": self.password,
                 "group.id": self.group_id,
@@ -60,12 +61,12 @@ class Kafka:
     def __await__(self) -> Generator[Any, None, Self]:
         return self.connect().__await__()
 
-    async def create_topic(self) -> None:
-        topic = self.topic
-        admin = confluent_kafka.AdminClient(
-            {"bootstrap.servers": self.bootstrap_servers}
-        )
-        new_topics = [
-            confluent_kafka.NewTopic(topic, num_partitions=1, replication_factor=1)
-        ]
-        admin.create_topics(new_topics)
+    # async def create_topic(self) -> None:
+    #     topic = self.topic
+    #     admin = confluent_kafka.AdminClient(
+    #         {"bootstrap.servers": self.bootstrap_servers}
+    #     )
+    #     new_topics = [
+    #         confluent_kafka.NewTopic(topic, num_partitions=1, replication_factor=1)
+    #     ]
+    #     admin.create_topics(new_topics)

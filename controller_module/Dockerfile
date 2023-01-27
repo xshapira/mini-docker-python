@@ -1,4 +1,5 @@
 FROM python:3.11
+
 RUN mkdir /data
 COPY controller_module/ /
 COPY requirements.txt message_broker.py config.py /
