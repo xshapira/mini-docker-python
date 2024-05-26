@@ -16,7 +16,14 @@ ruff = "^0.4.5"
 
 [tool.ruff]
 line-length = 88
-exclude = ['.git', '__pycache__', '__init__.py', '.mypy_cache', '.pytest_cache']
+exclude = [
+  '.git',
+  '__pycache__',
+  '__init__.py',
+  '.mypy_cache',
+  '.pytest_cache',
+  'theHarvester/',
+]
 lint.select = [
   "E",  # pycodestyle errors
   "W",  # pycodestyle warnings
