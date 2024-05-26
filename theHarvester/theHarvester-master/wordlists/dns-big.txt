@@ -129116,7 +129116,7 @@ _ftp
 _nfs
 _pptp
 _ntp
-_snmp	
+_snmp
 _xmpp-server
 _jabber
 a.auth-ns

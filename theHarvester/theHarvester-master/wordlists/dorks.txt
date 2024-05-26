@@ -2,8 +2,8 @@ login.html
 administrator/login.%XT%
 admin_area/login.%XT%
 intext:@
-inurl: 
-intitle: 
+inurl:
+intitle:
 intext:
 sysadm/
 administratoraccounts/
@@ -32,7 +32,7 @@ inurl:public
 intitle:index.of inbox
 intext:"Storage Management Server for" intitle:"Server Administration"
 inurl:"gs/adminlogin.aspx"
-"http://*:*@www" 
+"http://*:*@www"
 =enable password | secret "current configuration" -intext:the
 wwwboard WebAdmin inurl:passwd.txt wwwboard|webadmin
 robots.txt

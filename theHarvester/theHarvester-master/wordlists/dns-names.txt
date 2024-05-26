@@ -25,7 +25,7 @@ acct4
 acct4-cert
 achilles
 activestat
-ad 
+ad
 adm
 admin
 afrodita
@@ -104,11 +104,11 @@ customers
 cvs
 d
 db
-db 
-db01 
-db02 
-db1 
-db2 
+db
+db01
+db02
+db1
+db2
 de
 debian
 demo
@@ -122,7 +122,7 @@ develo
 development
 devil
 dhcp
-dhcp 
+dhcp
 dhcp1
 diablo
 dialup
@@ -205,7 +205,7 @@ human
 humanresources
 i
 ias
-id 
+id
 ids
 iis
 images
@@ -215,11 +215,11 @@ img01
 img02
 include
 inside
-int 
+int
 internal
 interno
-intl 
-intranet 
+intl
+intranet
 investor
 investors
 ipv6
@@ -244,7 +244,7 @@ labs
 lan
 lb
 ldap
-ldap 
+ldap
 linux
 linux01
 linux02
@@ -276,7 +276,7 @@ mgmt
 mike
 mobile
 mom
-mom 
+mom
 monitor
 monitoring
 mp3
@@ -354,7 +354,7 @@ peoplesoft
 peter
 phone
 pop
-pop 
+pop
 pop3
 portal
 pos0/0
@@ -393,7 +393,7 @@ retail
 router
 router1
 rss
-rtr		
+rtr
 rtr01
 rtr1
 s
@@ -404,9 +404,9 @@ san
 sap
 se1
 search
-sec 
+sec
 secure
-securid 
+securid
 server
 sharepoint
 siebel
@@ -426,7 +426,7 @@ slsg
 smdb
 sms
 smtp
-smtp 
+smtp
 snort
 sof
 solaris
@@ -492,7 +492,7 @@ uk
 ukgroup
 unreal
 ups
-ups 
+ups
 ups1
 uranus
 urchin
@@ -522,7 +522,7 @@ webalizer
 webdns1
 webdns2
 webmail
-webmail 
+webmail
 websphere
 webstats
 webtrends
@@ -551,7 +551,7 @@ www-01
 www-02
 www-1
 www-2
-www-int 
+www-int
 www01
 www02
 www1

@@ -13,7 +13,7 @@ For new modules a unit test for that module is required and we use pytest.
 * Have static typing on functions etc
 * Make sure no errors are reported from mypy
 * No issues reported with flake8
- 
+
 # Submitting Bugs
 If you find a bug in a module that you want to submit an issue for and know how to write python code.
-Please create a unit test for that bug(If possible) and submit a fix for it as it would be a big help to the project. 
+Please create a unit test for that bug(If possible) and submit a fix for it as it would be a big help to the project.
