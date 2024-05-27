@@ -1,8 +1,8 @@
 import functools
 from pathlib import Path
 
-from pydantic import BaseSettings, Field
-from pydantic_settings import SettingsConfigDict
+from pydantic import Field
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 BASE_DIR = Path(__file__).resolve().parent
 DOTENV_FILE = Path(BASE_DIR, ".env")
