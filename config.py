@@ -1,18 +1,22 @@
 import functools
+from pathlib import Path
 
-from pydantic import BaseSettings
+from pydantic import BaseSettings, Field
+from pydantic_settings import SettingsConfigDict
+
+BASE_DIR = Path(__file__).resolve().parent
+DOTENV_FILE = Path(BASE_DIR, ".env")
+DOTENV_PROD = Path(BASE_DIR, "prod.env")
 
 
 class Settings(BaseSettings):
-    RABBITMQ_HOST: str
-    RABBITMQ_USERNAME: str
-    RABBITMQ_PASSWORD: str
-    RABBITMQ_PORT: int
-    RABBITMQ_VHOST: str
+    RABBITMQ_HOST: str = Field(default=...)
+    RABBITMQ_USERNAME: str = Field(default=...)
+    RABBITMQ_PASSWORD: str = Field(default=...)
+    RABBITMQ_PORT: int = Field(default=...)
+    RABBITMQ_VHOST: str = Field(default=...)
 
-    class Config:
-        case_sensitive = True
-        env_file = ".env"
+    model_config = SettingsConfigDict(case_sensitive=True, env_file=DOTENV_FILE)
 
 
 @functools.cache
@@ -23,7 +27,10 @@ def get_settings() -> Settings:
     created only once, the first time it's called. Then it will return
     the same object that was returned on the first call, again and again.
     """
-    return Settings()
+    if Settings(DEBUG=True):
+        return Settings()
+
+    return Settings(_env_file=DOTENV_PROD, _env_file_encoding="utf-8")
 
 
 settings = get_settings()
