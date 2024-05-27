@@ -20,13 +20,13 @@ The `controller` is the consumer. `password` and `analyzer` are the producers—
 
  To build each image, run the following one-liner:
 
-```docker
+```bash
 docker build -f analyze_module/Dockerfile -t analyze_module . && docker build -f password_module/Dockerfile -t password_module . && docker build -f controller_module/Dockerfile -t controller_module .
 ```
 
 To run all containers after all the images were built, run the following command:
 
-```docker
+```bash
 docker-compose up --build
 ```
 
