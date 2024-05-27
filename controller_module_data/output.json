@@ -1,28 +1,27 @@
 {
     "files_by_type": {
-        ".py": 64,
-        "unknown": 11,
-        ".txt": 10,
+        ".py": 58,
+        "unknown": 9,
+        ".txt": 9,
         ".yml": 6,
         ".md": 3,
-        ".yaml": 2,
-        ".lock": 1,
+        ".png": 1,
         ".ini": 1,
         ".cfg": 1,
-        ".png": 1,
-        ".json": 1
+        ".yaml": 1,
+        ".lock": 1
     },
     "sorted_file_sizes": {
         "theHarvester/theHarvester-master/wordlists/dns-big.txt": "1.737 MB",
         "theHarvester/theHarvester-master/wordlists/names_small.txt": "0.387 MB",
-        "theHarvester/theHarvester-master/theHarvester/lib/ip-ranges.json": "0.185 MB",
-        "theHarvester/theHarvester-master/theHarvester/lib/core.py": "0.039 MB",
         "theHarvester/theHarvester-master/theHarvester/__main__.py": "0.034 MB",
         "theHarvester/theHarvester-master/Pipfile.lock": "0.033 MB",
-        "theHarvester/theHarvester-master/theHarvester/lib/resolvers.txt": "0.028 MB",
         "theHarvester/theHarvester-master/theHarvester-logo.png": "0.019 MB",
         "theHarvester/theHarvester-master/README/COPYING": "0.015 MB",
-        "theHarvester/theHarvester-master/theHarvester/lib/stash.py": "0.014 MB"
+        "theHarvester/theHarvester-master/.DS_Store": "0.008 MB",
+        "theHarvester/theHarvester-master/theHarvester/discovery/googlesearch.py": "0.006 MB",
+        "theHarvester/theHarvester-master/theHarvester/discovery/dnssearch.py": "0.006 MB",
+        "theHarvester/theHarvester-master/theHarvester/parsers/myparser.py": "0.006 MB"
     },
     "passwords": {
         "password": "canyoufindthis",
