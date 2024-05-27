@@ -10,6 +10,7 @@ DOTENV_PROD = Path(BASE_DIR, "prod.env")
 
 
 class Settings(BaseSettings):
+    DEBUG: bool = Field(default=...)
     RABBITMQ_HOST: str = Field(default=...)
     RABBITMQ_USERNAME: str = Field(default=...)
     RABBITMQ_PASSWORD: str = Field(default=...)
