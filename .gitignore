@@ -1,6 +1,7 @@
 *.DS_Store
 .vscode
 host_config.json
+.sourcery.yaml
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
