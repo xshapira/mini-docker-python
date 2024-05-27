@@ -1,4 +1,4 @@
-FROM python:3.11
+FROM python:3.12-slim-bookworm
 COPY analyze_module/ /
 COPY requirements.txt messageBroker.py config.py /
 WORKDIR /
