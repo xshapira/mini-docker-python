@@ -45,12 +45,8 @@ def get_files_by_type(files: list[str]) -> dict[str, Any]:
         file_path = pathlib.Path(file)
 
         # Use the `suffix`` attribute to get the file extension
-        file_type = file_path.suffix
-
-        if not file_type:
-            # Checking if the file type is unknown (empty file extension).
-            # If it is, then set the file type to unknown.
-            file_type = "unknown"
+        # otherwise set the file type to unknown.
+        file_type = file_path.suffix or "unknown"
         counts[file_type] += 1
 
     sorted_file_type = sorted(
