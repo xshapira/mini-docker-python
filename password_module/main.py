@@ -92,14 +92,7 @@ if __name__ == "__main__":
     logger.info(password_to_json)
 
     try:
-        # Create a new event loop and set it as the current event loop
-        loop = asyncio.new_event_loop()
-        asyncio.set_event_loop(loop)
-
-        # Create a task for the main coroutine function and run it
-        # until completion
-        loop.create_task(main())
-        loop.run_until_complete(main())
+        asyncio.run(main())
 
         print("Password was sent!")
     except Exception as ex:
