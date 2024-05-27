@@ -126,6 +126,7 @@ async def publish_message(rabbitmq: RabbitMQ) -> None:
 
     body = get_final_files()
     message = Message(body=body.encode())
+    await asyncio.sleep(0.5)
     await rabbitmq.publish(message, routing_key="letterbox")
 
 

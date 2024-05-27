@@ -75,6 +75,7 @@ async def publish_message(
     """
     body = password_to_json()
     message = Message(body=body.encode())
+    await asyncio.sleep(0.5)
     await rabbitmq.publish(message, routing_key="letterbox")
 
 

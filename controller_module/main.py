@@ -41,6 +41,7 @@ async def on_message_received(message: Message) -> None:
     else:
         with open("data/output.json", "w+") as dict_to_json:
             dict_to_json.write(json.dumps(message_data, indent=4))
+    await asyncio.sleep(0.5)
     await message.ack()
 
 
