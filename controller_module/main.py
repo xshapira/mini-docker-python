@@ -1,14 +1,13 @@
 import asyncio
 import json
-import logging
 from pathlib import Path
 
 from aio_pika import Message
 
+import logger
 from messageBroker import RabbitMQ
 
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
+log = logger.setup_logger(__name__)
 
 
 async def on_message_received(message: Message) -> None:
@@ -19,10 +18,10 @@ async def on_message_received(message: Message) -> None:
     This done in order to append all our 3 dictionaries and end up with
     a valid JSON file.
     """
-    logger.info("Received new message")
+    log.info("Received new message")
     body = message.body.decode()
     message_data = json.loads(body)
-    logger.info(body)
+    log.info(body)
 
     output_file = Path("data/output.json")
     if output_file.exists():
@@ -59,6 +58,7 @@ async def consume_messages(rabbitmq: RabbitMQ) -> None:
     :param rabbitmq: RabbitMQ: Access the rabbitmq object
     :return: The result of the on_message_received function
     """
+
     async with rabbitmq.connection.channel() as channel:
         queue = await channel.declare_queue("letterbox")
         await queue.consume(on_message_received)
@@ -74,17 +74,16 @@ async def main() -> None:
 
 
 if __name__ == "__main__":
-    logger.info("Controller module is running and listening...")
-    logger.info("Starting Consuming")
+    log.info("Controller module is running and listening...")
+    log.info("Starting Consuming")
 
     try:
         output_file = Path("data/output.json")
         if output_file.exists():
-            print("File Exists")
+            log.info("File Exists")
             output_file.unlink()
 
         asyncio.run(main())
-
-        print("Finished consuming messages!")
+        log.info("Finished consuming messages!")
     except Exception as e:
-        logger.info(f"controller not listening {e}")
+        log.info(f"controller not listening {e}")

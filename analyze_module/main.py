@@ -1,16 +1,15 @@
 import asyncio
 import json
-import logging
 import pathlib
 from collections import Counter
 from typing import Any
 
 from aio_pika import Message
 
+import logger
 from messageBroker import RabbitMQ
 
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
+log = logger.setup_logger(__name__)
 
 
 def get_files_from_path(directory: str) -> list[str]:
@@ -37,7 +36,6 @@ def get_files_by_type(files: list[str]) -> dict[str, Any]:
     :return: A dictionary containing the file types and the number
     of files that are of each type
     """
-
     final_files = {"files_by_type": {}}
     counts = Counter()
 
@@ -68,7 +66,6 @@ def get_sorted_file_sizes(files: list[str]) -> dict[str, Any]:
     :return: A dictionary with the path of the file as key and size
     in mb as value
     """
-
     final_files = {"sorted_file_sizes": {}}
 
     # Sorting the files by size and then taking the top 10 files.
@@ -123,7 +120,6 @@ async def publish_message(rabbitmq: RabbitMQ) -> None:
     :param rabbitmq: RabbitMQ: Access the rabbitmq instance that
     has been created in the main function
     """
-
     body = get_final_files()
     message = Message(body=body.encode())
     await asyncio.sleep(0.5)
@@ -134,18 +130,16 @@ async def main() -> None:
     """
     Create a RabbitMQ connection and publishes messages to it.
     """
-
     rabbitmq = await RabbitMQ()
     await publish_message(rabbitmq)
 
 
 if __name__ == "__main__":
-    logger.info("Analyze module is listening...")
-    logger.info(get_final_files())
+    log.info("Analyze module is listening...")
+    log.info(get_final_files())
 
     try:
         asyncio.run(main())
-
-        print("Files were sent!")
+        log.info("Files were sent!")
     except Exception as ex:
-        logger.info(f"Files were not sent {ex}")
+        log.info(f"Files were not sent {ex}")

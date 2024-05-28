@@ -1,16 +1,15 @@
 import asyncio
 import json
-import logging
 import pathlib
 import re
 from typing import Any, Callable
 
 from aio_pika import Message
 
+import logger
 from messageBroker import RabbitMQ
 
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
+log = logger.setup_logger(__name__)
 
 
 def get_files_from_path(directory: str) -> list[str]:
@@ -22,7 +21,6 @@ def get_files_from_path(directory: str) -> list[str]:
 
     :return: A list of all the files in the directory
     """
-
     dir_path = pathlib.Path(directory)
     data_path = list(dir_path.rglob("*"))
     return [str(f) for f in data_path if f.is_file()]
@@ -36,7 +34,6 @@ def get_password(string_to_match: str) -> dict[str, dict[str, str]]:
 
     :return: A dictionary containing the password and the filename
     """
-
     final_files = {"passwords": {}}
     files = get_files_from_path("theHarvester")
 
@@ -46,7 +43,6 @@ def get_password(string_to_match: str) -> dict[str, dict[str, str]]:
             if string_to_match.encode() in data:
                 output = data.decode("ISO-8859-1")
                 pattern_to_find = re.findall(rf"{string_to_match}. (\S+)", output)
-
                 # Convert list to string and remove quotes
                 # And confirm the password we get is not an empty string
                 if match := str(pattern_to_find)[1:-1].strip("'"):
@@ -59,7 +55,6 @@ def get_password(string_to_match: str) -> dict[str, dict[str, str]]:
 
 def password_to_json() -> str:
     password: dict[str, Any] = get_password("password")
-
     # Convert into a json string
     return json.dumps(password)
 
@@ -83,18 +78,16 @@ async def main() -> None:
     """
     Create a RabbitMQ object and calls publish_message() on it.
     """
-
     rabbitmq = await RabbitMQ()
     await publish_message(rabbitmq, password_to_json)
 
 
 if __name__ == "__main__":
-    logger.info("Password module is listening...")
-    logger.info(password_to_json)
+    log.info("Password module is listening...")
+    log.info(password_to_json)
 
     try:
         asyncio.run(main())
-
-        print("Password was sent!")
+        log.info("Password was sent!")
     except Exception as ex:
-        logger.info(f"Password was not sent! {ex}")
+        log.info(f"Password was not sent! {ex}")
