@@ -65,15 +65,6 @@ async def consume_messages(rabbitmq: RabbitMQ) -> None:
 
 
 async def main() -> None:
-    """
-    Create a RabbitMQ object and then calls an async function
-    to consume messages from it.
-    """
-    rabbitmq = await RabbitMQ()
-    await consume_messages(rabbitmq)
-
-
-if __name__ == "__main__":
     log.info("Controller module is running and listening...")
     log.info("Starting Consuming")
 
@@ -82,8 +73,13 @@ if __name__ == "__main__":
         if output_file.exists():
             log.info("File Exists")
             output_file.unlink()
-
-        asyncio.run(main())
         log.info("Finished consuming messages!")
     except Exception as e:
         log.info(f"controller not listening {e}")
+
+    rabbitmq = await RabbitMQ()
+    await consume_messages(rabbitmq)
+
+
+if __name__ == "__main__":
+    asyncio.run(main())

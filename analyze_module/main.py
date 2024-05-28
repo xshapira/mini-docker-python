@@ -127,19 +127,17 @@ async def publish_message(rabbitmq: RabbitMQ) -> None:
 
 
 async def main() -> None:
-    """
-    Create a RabbitMQ connection and publishes messages to it.
-    """
+    log.info("Analyze module is listening...")
+    log.info(get_final_files())
+
+    try:
+        log.info("Files were sent!")
+    except Exception as ex:
+        log.info(f"Files were not sent {ex}")
+
     rabbitmq = await RabbitMQ()
     await publish_message(rabbitmq)
 
 
 if __name__ == "__main__":
-    log.info("Analyze module is listening...")
-    log.info(get_final_files())
-
-    try:
-        asyncio.run(main())
-        log.info("Files were sent!")
-    except Exception as ex:
-        log.info(f"Files were not sent {ex}")
+    asyncio.run(main())

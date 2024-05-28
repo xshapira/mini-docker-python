@@ -75,19 +75,17 @@ async def publish_message(
 
 
 async def main() -> None:
-    """
-    Create a RabbitMQ object and calls publish_message() on it.
-    """
+    log.info("Password module is listening...")
+    log.info(password_to_json)
+
+    try:
+        log.info("Password was sent!")
+    except Exception as ex:
+        log.info(f"Password was not sent! {ex}")
+
     rabbitmq = await RabbitMQ()
     await publish_message(rabbitmq, password_to_json)
 
 
 if __name__ == "__main__":
-    log.info("Password module is listening...")
-    log.info(password_to_json)
-
-    try:
-        asyncio.run(main())
-        log.info("Password was sent!")
-    except Exception as ex:
-        log.info(f"Password was not sent! {ex}")
+    asyncio.run(main())
