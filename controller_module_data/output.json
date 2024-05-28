@@ -1,4 +1,8 @@
 {
+    "passwords": {
+        "password": "canyoufindthis",
+        "filename": "theHarvester/theHarvester-master/theHarvester/parsers/myparser.py"
+    },
     "files_by_type": {
         ".py": 58,
         "unknown": 9,
@@ -22,9 +26,5 @@
         "theHarvester/theHarvester-master/theHarvester/discovery/googlesearch.py": "0.006 MB",
         "theHarvester/theHarvester-master/theHarvester/discovery/dnssearch.py": "0.006 MB",
         "theHarvester/theHarvester-master/theHarvester/parsers/myparser.py": "0.006 MB"
-    },
-    "passwords": {
-        "password": "canyoufindthis",
-        "filename": "theHarvester/theHarvester-master/theHarvester/parsers/myparser.py"
     }
 }
