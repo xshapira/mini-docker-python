@@ -28,8 +28,9 @@ def get_settings() -> Settings:
     created only once, the first time it's called. Then it will return
     the same object that was returned on the first call, again and again.
     """
-    if Settings().DEBUG:
-        return Settings()
+    app_settings = Settings()
+    if app_settings.DEBUG:
+        return app_settings
 
     return Settings(_env_file=DOTENV_PROD, _env_file_encoding="utf-8")
 
